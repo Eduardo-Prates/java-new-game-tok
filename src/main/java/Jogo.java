@@ -3,6 +3,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * A classe Jogo representa a interface gráfica do jogo do Tok.
+ */
 public class Jogo extends JFrame {
     private Tabuleiro tabuleiro;
     private Rodada rodada;
@@ -31,6 +34,10 @@ public class Jogo extends JFrame {
     private JPanel subPainelErros;
     private JLabel erroLabel;
 
+    /**
+     * Construtor da classe Jogo. Inicializa a rodada, configura a janela, a barra de menus,
+     * o painel principal, o painel lateral e cria o tabuleiro.
+     */
     public Jogo() {
         rodada = new Rodada();
 
@@ -47,6 +54,9 @@ public class Jogo extends JFrame {
         setVisible(true);
     }
 
+    /**
+     * Configura a barra de menus com opções como Reiniciar, Sair e Autores.
+     */
     private void configurarBarraMenus() {
         JMenuBar menuBar = new JMenuBar();
         JMenu menuJogo = new JMenu("Jogo");
@@ -83,15 +93,24 @@ public class Jogo extends JFrame {
         setJMenuBar(menuBar);
     }
 
+    /**
+     * Reinicia o jogo, fechando a janela atual e criando uma nova instância de Jogo.
+     */
     private void reiniciarJogo() {
         dispose();
         new Jogo();
     }
 
+    /**
+     * Mostra os nomes dos autores do jogo em uma caixa de diálogo.
+     */
     private void mostrarNomesAutores() {
         JOptionPane.showMessageDialog(this, "Autores do Jogo:\nEduardo P. Tiadoro, vulgo casé \nReinaldo Z. Wendt, vulgo kng");
     }
 
+    /**
+     * Configura as propriedades da janela principal do jogo.
+     */
     private void configurarJanela(){
         setTitle("Jogo do Tok");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -100,6 +119,9 @@ public class Jogo extends JFrame {
         setLayout(new BorderLayout());
     }
 
+    /**
+     * Configura o painel principal do jogo.
+     */
     private void configurarPainelPrincipal(){
         tabuleiro = new Tabuleiro();
         painelPrincipal = new JPanel();
@@ -108,6 +130,9 @@ public class Jogo extends JFrame {
         add(painelPrincipal, BorderLayout.CENTER);
     }
 
+    /**
+     * Cria o tabuleiro no painel principal do jogo.
+     */
     private void criarTabuleiro() {
         for (int i = 0; i < botoes.length; i++) {
             for (int j = 0; j < botoes[i].length; j++) {
@@ -141,6 +166,9 @@ public class Jogo extends JFrame {
         }
     }
 
+    /**
+     * Atualiza os dados exibidos na interface gráfica como a rodada, o jogador atual, a peça selecionada e a peça a ser movida.
+     */
     private void atualizarDados(){
         rodadaLabel.setText(String.valueOf(rodada.etapa));
         jogadorLabel.setText(String.valueOf(rodada.jogadorAtual));
@@ -160,6 +188,9 @@ public class Jogo extends JFrame {
         }
     }
 
+    /**
+     * Configura o painel lateral do jogo.
+     */
     private void configurarPainelLateral(){
         painelLateral = new JPanel();
         painelLateral.setLayout(new GridLayout(3, 1));
@@ -172,6 +203,10 @@ public class Jogo extends JFrame {
 
         add(painelLateral, BorderLayout.EAST);
     }
+
+    /**
+     * Configura o subpainel de informações do jogo.
+     */
     private void configurarSubPainelInfos(){
         subPainelInfos = new JPanel();
         subPainelInfos.setLayout(new GridLayout(4, 2));
@@ -206,6 +241,9 @@ public class Jogo extends JFrame {
         painelLateral.add(subPainelInfos);
     }
 
+    /**
+     * Configura o subpainel de controles do jogo.
+     */
     private void configurarSubPainelControles(){
         subPainelControles = new JPanel();
         subPainelControles.setLayout(new GridLayout(2, 3));
@@ -225,6 +263,9 @@ public class Jogo extends JFrame {
         painelLateral.add(subPainelControles);
     }
 
+    /**
+     * Configura o subpainel de erros do jogo.
+     */
     private void configurarSubPainelErros(){
         subPainelErros = new JPanel();
         subPainelErros.setLayout(new GridLayout(2, 1));
@@ -237,6 +278,9 @@ public class Jogo extends JFrame {
         painelLateral.add(subPainelErros);
     }
 
+    /**
+     * Adiciona os ouvintes de eventos aos botões de controle no subpainel de controles.
+     */
     private void adicionarListenersDoSubPainelControles(){
         botaoBaixo.addActionListener(new ActionListener() {
             @Override
@@ -296,6 +340,9 @@ public class Jogo extends JFrame {
         });
     }
 
+    /**
+     * Deseleciona todas as peças no tabuleiro.
+     */
     private void deselecionarPecasComExcessao(int linha, int coluna){
         for(int i = 0; i < botoes.length; i++){
             for(int j = 0; j < botoes[i].length; j++){
@@ -317,6 +364,9 @@ public class Jogo extends JFrame {
     }
 
 
+    /**
+     * Atualiza o tabuleiro na interface gráfica.
+     */
     private void atualizarTabuleiro(){
         resultado = new int[3];
         resultado = tabuleiro.verificarCondicaoDeVitoria(rodada);
@@ -356,6 +406,9 @@ public class Jogo extends JFrame {
         verificarSituacao();
     }
 
+    /**
+     * Verifica a rodada atual e passa para a próxima.
+     */
     private void verificarRodada(){
         if(rodada.pecaASerMovida == Rodada.PECA_TOK){
             rodada.passarMetadeRodada();
@@ -364,6 +417,9 @@ public class Jogo extends JFrame {
         }
     }
 
+    /**
+     * Verifica a situação do jogo e exibe uma mensagem de fim de jogo caso necessário.
+     */
     private void verificarSituacao(){
         if(resultado[Tabuleiro.SITUACAO_VITORIA] == Tabuleiro.HOUVE_VITORIA){
             desabilitarBotoes();
@@ -396,6 +452,9 @@ public class Jogo extends JFrame {
         }
     }
 
+    /**
+     * Desabilita os botões de controle do jogo e as peças no tabuleiro após o fim do jogo.
+     */
     private void desabilitarBotoes(){
         for(int i = 0; i < botoes.length; i++){
             for(int j = 0; j < botoes[i].length; j++){
@@ -408,6 +467,9 @@ public class Jogo extends JFrame {
         botaoEsquerda.setEnabled(false);
     }
 
+    /**
+     * Habilita os botões de controle do jogo e as peças no tabuleiro após o reinício.
+     */
     private void habilitarBotoes(){
         for(int i = 0; i < botoes.length; i++){
             for(int j = 0; j < botoes[i].length; j++){

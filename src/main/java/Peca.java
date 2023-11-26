@@ -1,32 +1,54 @@
+/**
+ * A classe Peca representa uma peça no jogo do Tok, contendo informações sobre sua posição e tipo.
+ */
 public class Peca {
     private int linha;
     private int coluna;
     private int tipo;
     boolean primeiraVez = true;
 
+    /**
+     * Constantes que representam direções possíveis para mover a peça.
+     */
     public static final int ESQUERDA = 1;
     public static final int DIREITA = 2;
     public static final int CIMA = 3;
     public static final int BAIXO = 4;
 
+    /**
+     * Limites do tabuleiro para verificação de movimento.
+     */
     public static final int LIMITE_SUPERIOR = 0;
     public static final int LIMITE_INFERIOR = 4;
     public static final int LIMITE_ESQUERDA = 0;
     public static final int LIMITE_DIREITA = 4;
 
-
+    /**
+     * Tipos possíveis de peça.
+     */
     public static final int SLOT_VAZIO = 0;
     public static final int JOGADOR1 = 1;
     public static final int JOGADOR2 = 2;
     public static final int TOK = 3;
 
-
+    /**
+     * Construtor da classe Peca. Inicializa a peça com a posição e tipo especificados.
+     * @param i A coordenada da linha.
+     * @param j A coordenada da coluna.
+     * @param tipo O tipo da peça.
+     */
     public Peca(int i, int j, int tipo) {
         this.linha = i;
         this.coluna = j;
         this.tipo = tipo;
     }
 
+    /**
+     * Move a peça na direção especificada no tabuleiro, considerando regras de movimento e limites do tabuleiro.
+     * @param tabuleiro O tabuleiro do jogo.
+     * @param direcao A direção para a qual a peça deve ser movida.
+     * @param rodada A rodada atual do jogo.
+     */
     public void mover(Tabuleiro tabuleiro, int direcao, Rodada rodada){
         if(tipo == SLOT_VAZIO){
             throw new RuntimeException("Selecione uma posição válida!");
@@ -52,6 +74,12 @@ public class Peca {
         }
     }
 
+    /**
+     * Verifica se a peça pode ser movida na direção especificada, considerando limites e obstáculos.
+     * @param tabuleiro O tabuleiro do jogo.
+     * @param direcao A direção para a qual a peça deve ser movida.
+     * @return True se a peça pode ser movida, False caso contrário.
+     */
     public boolean estaLivre(Tabuleiro tabuleiro, int direcao){
         if(verificarLimites(direcao)){
             switch (direcao) {
@@ -98,6 +126,11 @@ public class Peca {
         }
     }
 
+    /**
+     * Verifica se a próxima posição está dentro dos limites do tabuleiro.
+     * @param direcao A direção para a qual a peça deve ser movida.
+     * @return True se a próxima posição está dentro dos limites, False caso contrário.
+     */
     public boolean verificarLimites(int direcao){
         switch (direcao) {
             case ESQUERDA -> {
@@ -136,6 +169,11 @@ public class Peca {
         return true;
     }
 
+    /**
+     * Move a peça para a próxima posição no tabuleiro.
+     * @param tabuleiro O tabuleiro do jogo.
+     * @param direcao A direção para a qual a peça deve ser movida.
+     */
     public void mudarPosicao(Tabuleiro tabuleiro, int direcao){
         tabuleiro.removerPeca(this);
 

@@ -1,24 +1,48 @@
+/**
+ * A classe representa o tabuleiro do jogo e suas funcionalidades.
+ */
 public class Tabuleiro {
+
+    /**
+     * Representa o tabuleiro do jogo como uma matriz de peças.
+     */
     private Peca[][] tabuleiro;
 
+    /**
+     * Vetor de resultados que armazena informações sobre a condição de vitória.
+     */
     public int[] resultado;
     public static final int SITUACAO_VITORIA = 0;
     public static final int AINDA_NAO_HOUVE_VITORIA = 0;
     public static final int HOUVE_VITORIA = 1;
 
+    /**
+     * Representa os resultados possíveis do vetor de resultados.
+     */
     public static final int JOGADOR_VENCEDOR = 1;
     public static final int NENHUM_JOGADOR = 0;
     public static final int JOGADOR_1 = 1;
     public static final int JOGADOR_2 = 2;
 
+    /**
+     * Representa os tipos de vitória possíveis.
+     */
+
     public static final int TIPO_VITORIA = 2;
     public static final int VITORIA_POR_POSICAO = 1;
     public static final int VITORIA_POR_IMOBILIZACAO = 2;
 
+    /**
+     * Construtor padrão que inicializa o tabuleiro e define as posições iniciais das peças.
+     */
     public Tabuleiro() {
         this.tabuleiro = new Peca[5][5];
         definirPosicoes();
     }
+
+    /**
+     * Inicializa as posições iniciais das peças no tabuleiro.
+     */
     private void definirPosicoes(){
         for(int linha = 0; linha < 5; linha++){
             for(int coluna = 0; coluna < 5; coluna++){
@@ -37,18 +61,43 @@ public class Tabuleiro {
             }
         }
     }
+
+    /**
+     * Adiciona uma peça ao tabuleiro.
+     *
+     * @param peca A peça a ser adicionada.
+     * @param tipo O tipo da peça a ser adicionada.
+     */
     public void adicionarPeca(Peca peca, int tipo){
         this.tabuleiro[peca.getLinha()][peca.getColuna()] = new Peca(peca.getLinha(), peca.getColuna(), tipo);
     }
 
+    /**
+     * Remove uma peça do tabuleiro.
+     *
+     * @param peca A peça a ser removida.
+     */
     public void removerPeca(Peca peca){
         adicionarPeca(peca, Peca.SLOT_VAZIO);
     }
 
+    /**
+     * Obtém a peça em uma determinada posição do tabuleiro.
+     *
+     * @param linha A linha da posição desejada.
+     * @param coluna A coluna da posição desejada.
+     * @return A peça na posição especificada.
+     */
     public Peca getPecaAt(int linha, int coluna){
         return tabuleiro[linha][coluna];
     }
 
+    /**
+     * Verifica a condição de vitória do jogo.
+     *
+     * @param rodada A rodada atual do jogo.
+     * @return Um vetor de resultados que contém informações sobre a condição de vitória.
+     */
     public int[] verificarCondicaoDeVitoria(Rodada rodada){
         resultado = new int[3];
 
@@ -79,6 +128,11 @@ public class Tabuleiro {
         return resultado;
     }
 
+    /**
+     * Verifica a posição do TOK para definir vitória.
+     *
+     * @return O jogador vencedor (JOGADOR_1 ou JOGADOR_2) ou NENHUM_JOGADOR se não houver vencedor.
+     */
     public int verificarPosicao(){
         for(int j=0; j<5; j++){
             Peca peca = getPecaAt(0, j);
@@ -97,6 +151,11 @@ public class Tabuleiro {
         return NENHUM_JOGADOR;
     }
 
+    /**
+     * Verifica a disponibilidade de movimentos no tabuleiro.
+     *
+     * @return true se houver movimentos disponíveis, false caso contrário.
+     */
     public boolean verificarDisponibilidade(){
         Peca tok = new Peca(0,0,Peca.SLOT_VAZIO);
         for(int linha = 0; linha < 5; linha++){
